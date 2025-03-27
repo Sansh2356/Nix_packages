@@ -67,7 +67,8 @@ stdenv.mkDerivation rec {
     # Install the entire contrib directory
     mkdir -p $out/contrib
     cp -r contrib/* $out/contrib/
-
+    cp -r ./test/functional/test_framework $out/contrib/cpunet
+    chmod -R 777 $out/contrib/cpunet/test_framework
     runHook postInstall
   '';
 
