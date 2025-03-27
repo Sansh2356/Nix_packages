@@ -26,7 +26,7 @@ in
 stdenv.mkDerivation rec {
   pname = "bitcoind-cpunet-braidpool";
   inherit version;
-
+#Source directory from where it will be cloning
   src = fetchFromGitHub {
     owner = "braidpool";
     repo = "bitcoin";
@@ -55,16 +55,15 @@ stdenv.mkDerivation rec {
   doCheck = false;
 
   checkFlags = [ "LC_ALL=en_US.UTF-8" ];
-
-  
-  installPhase = ''
+# For better core utilization and faster build enableParallelBuilding = true;
+    installPhase = ''
     runHook preInstall
-
-    # Install the binaries with proper permissions
+#Parralel execution can be set to  True as well for better compiling files parrallely 
+    # Install the binaries with proper permissions can add other binaries as well
     install -Dm755 src/bitcoind $out/bin/bitcoind
     install -Dm755 src/bitcoin-cli $out/bin/bitcoin-cli
     install -Dm755 src/bitcoin-tx $out/bin/bitcoin-tx
-
+    install -Dm755 src/bitcoin-util $out/bin/bitcoin-util
     # Install the entire contrib directory
     mkdir -p $out/contrib
     cp -r contrib/* $out/contrib/
